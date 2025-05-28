@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emotion Diary AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+
+  <div class="max-w-md w-full bg-white p-6 rounded-xl shadow space-y-4">
+    <h1 class="text-xl font-bold text-center">Emotion Diary AI</h1>
+
+    <form id="emotionForm" class="space-y-2">
+      <input id="emotionInput" type="text" placeholder="How are you feeling?" class="w-full border p-2 rounded" required />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Log Emotion</button>
+    </form>
+
+    <div id="emotionOutput" class="text-center space-y-2 hidden">
+      <p class="font-semibold" id="emotionText"></p>
+      <div id="colorBox" class="w-full h-16 rounded"></div>
+      <p id="suggestion" class="text-sm text-gray-700"></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('emotionForm');
+    const emotionInput = document.getElementById('emotionInput');
+    const emotionOutput = document.getElementById('emotionOutput');
+    const emotionText = document.getElementById('emotionText');
+    const colorBox = document.getElementById('colorBox');
+    const suggestion = document.getElementById('suggestion');
+
+    const emotionMap = {
+      happy: { color: 'bg-yellow-200', suggestion: 'Keep smiling! Maybe share it with a friend.' },
+      sad: { color: 'bg-blue-200', suggestion: 'Try a short walk or listening to music.' },
+      anxious: { color: 'bg-red-200', suggestion: 'Breathe deeply, or journal it down.' },
+      calm: { color: 'bg-green-200', suggestion: 'Enjoy the peace, maybe do some meditation.' },
+      angry: { color: 'bg-orange-300', suggestion: 'Try some light stretching or step away from screens.' }
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emotion = emotionInput.value.toLowerCase().trim();
+      const mapped = emotionMap[emotion] || { color: 'bg-gray-300', suggestion: 'Emotion logged. No specific advice.' };
+
+      emotionText.textContent = `You’re feeling: ${emotion}`;
+      colorBox.className = `w-full h-16 rounded ${mapped.color}`;
+      suggestion.textContent = mapped.suggestion;
+
+      emotionOutput.classList.remove('hidden');
+    });
+  </script>
+
+</body>
+</html>
